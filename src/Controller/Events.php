@@ -103,9 +103,9 @@ class Events extends Controller
      */
     private function getStreamByRequest(array $data): ?Streams
     {
-        $streamId = explode('_', $data['app'])[1];
+        $streamName = explode('/', $data['app'])[1];
 
-        $stream = $this->repository->find($streamId);
+        $stream = $this->repository->findOneBy(['name' => $streamName]);
 
         if ($stream !== null && $stream->getStreamKey() === $data['name']) {
             return $stream;
