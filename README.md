@@ -2,7 +2,7 @@
 
 ## What is ReCast?
 
-ReCast is a multi platform streaming tool written in PHP and uses nginx RTMP. You can throught your servers to multiple services simultaneously like Twitch, YouTube, Mixer and custom RTMP.
+ReCast is a multi platform streaming tool written in PHP and uses nginx RTMP. You can stream through one server to multiple services
 
 ## Installation
 

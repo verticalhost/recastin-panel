@@ -37,8 +37,8 @@
         data() {
             return {
                 login: {
-                    _username: 'Shyim',
-                    _password: '1',
+                    _username: '',
+                    _password: '',
                 },
                 rememberMe: false,
                 authFailed: false
