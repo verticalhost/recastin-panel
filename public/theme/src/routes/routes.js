@@ -11,6 +11,7 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 import Overview from 'src/components/ReCast/Overview.vue'
 import ListStreams from 'src/components/ReCast/Streams/List.vue'
 import EditStream from 'src/components/ReCast/Streams/EditStream.vue'
+import SetupStream from 'src/components/ReCast/Streams/SetupStream.vue'
 import ListEndpoints from 'src/components/ReCast/Endpoints/List.vue'
 import EditEndpoint from 'src/components/ReCast/Endpoints/EditEndpoint.vue'
 
@@ -50,6 +51,11 @@ const routes = [
             {
                 path: 'streams/:id/endpoints',
                 component: ListEndpoints,
+                meta: {auth: true},
+            },
+            {
+                path: 'streams/:id/setup',
+                component: SetupStream,
                 meta: {auth: true},
             },
             {

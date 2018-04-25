@@ -12,7 +12,6 @@
                                 <th>Live</th>
                                 <th>Name</th>
                                 <th>Endpoints</th>
-                                <th>Stream Key</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -21,8 +20,8 @@
                                     <td><i class="fa fa-circle" :class="stream.live ? 'text-success' : 'text-danger'" aria-hidden="true"></i></td>
                                     <td>{{ stream.name }}</td>
                                     <td>{{ getProviders(stream) }}</td>
-                                    <td>{{ stream.streamKey }}</td>
                                     <td>
+                                        <a :href="'#/ucp/streams/' + stream.id + '/setup'" class="btn btn-info">Setup</a>
                                         <a :href="'#/ucp/streams/' + stream.id + '/endpoints'" class="btn btn-primary">Endpoints</a>
                                         <a :href="'#/ucp/streams/' + stream.id + '/'" class="btn btn-secondary">Edit</a>
                                         <a v-on:click="regenerateKey(stream)" class="btn btn-danger">Regenerate Stream Key</a>

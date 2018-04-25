@@ -71,7 +71,11 @@ class Streams extends Controller
             return new Response('Access denied', 401);
         }
 
-        return new JsonResponse($stream);
+        $host = parse_url($this->container->getParameter('appHost'), PHP_URL_HOST);
+        $data = $stream->jsonSerialize();
+        $data['streamUrl'] = sprintf('rtmp://%s/%s', $host, $stream->getUser()->getUsername() . '_' . $stream->getId());
+
+        return new JsonResponse($data);
     }
 
     /**
