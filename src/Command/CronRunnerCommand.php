@@ -8,13 +8,17 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class CronRunnerCommand
  * @author Soner Sayakci <shyim@posteo.de>
  */
-class CronRunnerCommand extends Command
+class CronRunnerCommand extends Command implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @var Connection
      */
@@ -59,7 +63,7 @@ class CronRunnerCommand extends Command
     {
         if ($this->connection->fetchColumn('SELECT 1 FROM queue')) {
             $this->configGenerator->generate();
-            system('systemctl reload nginx-rtmp');
+            system($this->container->getParameter('nginxRestartCommand'));
 
             $io = new SymfonyStyle($input, $output);
             $io->success('Configs generated, rtmp has been reloaded');

@@ -4,6 +4,7 @@ parameters:
     locale: 'en'
     appHost: '%env(APP_HOST)%'
     nginxFolder: '%env(NGINX_CONFIG_DIR)%'
+    nginxRestartCommand: '%env(NGINX_RESTART_COMMAND)%'
 
 services:
     # default configuration for services in *this* file
