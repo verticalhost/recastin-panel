@@ -42,8 +42,17 @@ class StreamsRepository extends ServiceEntityRepository
      * @return Streams[]
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function getActiveStreams()
+    public function getActiveStreams(): array
     {
-        return $this->findBy(['active' => true]);
+        $qb = $this->createQueryBuilder('streams')
+            ->addSelect('endpoints')
+            ->addSelect('user')
+            ->leftJoin('streams.endpoints', 'endpoints')
+            ->leftJoin('streams.user', 'user')
+            ->andWhere('streams.active = true')
+            ->andWhere('endpoints.active = true')
+            ->getQuery();
+
+        return $qb->getResult();
     }
 }

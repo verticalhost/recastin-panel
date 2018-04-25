@@ -24,6 +24,7 @@
                             <table class="table">
                                 <thead class="thead-dark">
                                 <tr>
+                                    <th>Active</th>
                                     <th>Name</th>
                                     <th>Service</th>
                                     <th>Location</th>
@@ -32,6 +33,7 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="endpoint in endpoints">
+                                    <td><i class="fa fa-circle" :class="endpoint.active ? 'text-success' : 'text-danger'" aria-hidden="true"></i></td>
                                     <td>{{ endpoint.name }}</td>
                                     <td>{{ endpoint.type }}</td>
                                     <td>{{ endpoint.server }}</td>

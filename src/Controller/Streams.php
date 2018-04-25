@@ -208,6 +208,7 @@ class Streams extends Controller
         $endpoint = !empty($requestBody['id']) ? $this->endpointRepository->find($requestBody['id']) : new Endpoint();
 
         $endpoint->setName($requestBody['name']);
+        $endpoint->setActive($requestBody['active']);
         $endpoint->setType($requestBody['type']);
         $endpoint->setServer($requestBody['server']);
         $endpoint->setStreamKey($requestBody['streamKey']);

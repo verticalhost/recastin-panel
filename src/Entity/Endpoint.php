@@ -22,6 +22,12 @@ class Endpoint implements \JsonSerializable
     private $id;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": true})
+     * @var bool
+     */
+    private $active;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
@@ -58,6 +64,24 @@ class Endpoint implements \JsonSerializable
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
     }
 
     /**

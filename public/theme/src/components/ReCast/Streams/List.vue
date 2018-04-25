@@ -10,6 +10,7 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th>Live</th>
+                                <th>Active</th>
                                 <th>Name</th>
                                 <th>Endpoints</th>
                                 <th>Action</th>
@@ -18,6 +19,7 @@
                             <tbody>
                                 <tr v-for="stream in streams">
                                     <td><i class="fa fa-circle" :class="stream.live ? 'text-success' : 'text-danger'" aria-hidden="true"></i></td>
+                                    <td><i class="fa fa-circle" :class="stream.active ? 'text-success' : 'text-danger'" aria-hidden="true"></i></td>
                                     <td>{{ stream.name }}</td>
                                     <td>{{ getProviders(stream) }}</td>
                                     <td>

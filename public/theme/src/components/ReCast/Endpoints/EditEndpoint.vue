@@ -10,6 +10,10 @@
                         <fg-input label="Name" v-model="endpoint.name"></fg-input>
 
                         <div class="form-group">
+                            <p-checkbox v-model="endpoint.active">Active</p-checkbox>
+                        </div>
+
+                        <div class="form-group">
                             <label class="control-label">
                                 Type
                             </label>
@@ -51,6 +55,7 @@
             return {
                 endpoint: {
                     name: '',
+                    active: false,
                     type: 'Mixer',
                     server: '',
                     streamKey: '',
@@ -74,7 +79,7 @@
         methods: {
             save: function () {
                 this.axios.post('/streams/' + this.$route.params.streamId + '/endpoints/update', this.endpoint).then(() => {
-                    this.$router.push('/ucp/streams/' + this.$route.params.streamId + '/endpoints');
+                    this.$router.push('/ucp/streams/' + this.$route.params.streamId + '/');
                 })
             }
         },
