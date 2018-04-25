@@ -12,7 +12,6 @@ import Overview from 'src/components/ReCast/Overview.vue'
 import ListStreams from 'src/components/ReCast/Streams/List.vue'
 import EditStream from 'src/components/ReCast/Streams/EditStream.vue'
 import SetupStream from 'src/components/ReCast/Streams/SetupStream.vue'
-import ListEndpoints from 'src/components/ReCast/Endpoints/List.vue'
 import EditEndpoint from 'src/components/ReCast/Endpoints/EditEndpoint.vue'
 
 const routes = [
@@ -46,11 +45,6 @@ const routes = [
             {
                 path: 'streams/:id/',
                 component: EditStream,
-                meta: {auth: true},
-            },
-            {
-                path: 'streams/:id/endpoints',
-                component: ListEndpoints,
                 meta: {auth: true},
             },
             {
