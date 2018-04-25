@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Streams;
 use App\Repository\StreamsRepository;
+use Doctrine\Common\Util\Debug;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,14 +104,9 @@ class Events extends Controller
      */
     private function getStreamByRequest(array $data): ?Streams
     {
-        $streamName = explode('/', $data['app'])[1];
+        [$username, $streamName] = explode('/', $data['app']);
+        $stream = $this->repository->getStreamByNameAndUsername($streamName, $username, $data['name']);
 
-        $stream = $this->repository->findOneBy(['name' => $streamName]);
-
-        if ($stream !== null && $stream->getStreamKey() === $data['name']) {
-            return $stream;
-        }
-
-        return null;
+        return $stream;
     }
 }
