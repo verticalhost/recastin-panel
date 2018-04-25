@@ -45,6 +45,6 @@ class Mixer extends AbstractService
      */
     public function buildStreamUrl(Endpoint $endpoint): string
     {
-        return 'rtmp://' . $endpoint->getServer() . '/' . $endpoint->getStreamKey();
+        return 'rtmp://' . $endpoint->getServer() . ':1935/beam' . $endpoint->getStreamKey();
     }
 }
