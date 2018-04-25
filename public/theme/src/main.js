@@ -4,6 +4,8 @@ import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
+import VueNotify from 'vue-notifyjs'
+import 'vue-notifyjs/themes/default.css'
 
 
 // router setup
@@ -25,6 +27,7 @@ Vue.router = router;
 axios.defaults.baseURL = `http://streamer.miku/api`;
 
 Vue.use(VueAxios, axios);
+Vue.use(VueNotify);
 Vue.use(VueAuth, {
     auth: {
         request: function (req, token) {
