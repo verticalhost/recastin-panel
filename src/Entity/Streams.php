@@ -5,9 +5,17 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StreamsRepository")
+ * @ORM\Table(name="streams",
+ *     uniqueConstraints={
+ *          @UniqueConstraint(name="stream_name",
+ *              columns={"name", "user_id"})
+ *     }
+ * )
  * @ORM\HasLifecycleCallbacks()
  */
 class Streams implements \JsonSerializable
@@ -21,7 +29,7 @@ class Streams implements \JsonSerializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      * @var string
      */
     private $name;

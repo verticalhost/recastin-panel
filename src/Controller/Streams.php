@@ -3,13 +3,12 @@
 
 namespace App\Controller;
 
-use App\Component\Forms\Endpoint as EndpointForm;
-use App\Component\Forms\Streams as StreamsForm;
 use App\Component\ServiceManager;
 use App\Entity\Endpoint;
 use App\Entity\User;
 use App\Repository\EndpointRepository;
 use App\Repository\StreamsRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -96,14 +95,22 @@ class Streams extends Controller
             return new Response('Access denied', 401);
         }
 
+        if (empty($requestBody['name']) || !$this->isValidString($requestBody['name'])) {
+            return new JsonResponse(['message' => 'Name is empty or contains illegal strings'], 500);
+        }
+
         $stream->setUser($this->getUser());
         $stream->setName($requestBody['name']);
         $stream->setActive($requestBody['active']);
 
         $manager = $this->get('doctrine.orm.entity_manager');
 
-        $manager->persist($stream);
-        $manager->flush();
+        try  {
+            $manager->persist($stream);
+            $manager->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            return new JsonResponse(['message' => sprintf('"%s" is already taken', $stream->getName())], 500);
+        }
 
         return new JsonResponse($stream);
     }
@@ -205,6 +212,18 @@ class Streams extends Controller
             return new JsonResponse([]);
         }
 
+        if (empty($requestBody['name'])) {
+            return new JsonResponse(['message' => 'Name is empty'], 500);
+        }
+
+        if (empty($requestBody['server']) || !$this->isValidString($requestBody['server'])) {
+            return new JsonResponse(['message' => 'Server is empty or contains illegal strings'], 500);
+        }
+
+        if (!empty($requestBody['streamKey']) && !$this->isValidString($requestBody['streamKey'])) {
+            return new JsonResponse(['message' => 'Stream-Key contains illegal strings'], 500);
+        }
+
         $endpoint = !empty($requestBody['id']) ? $this->endpointRepository->find($requestBody['id']) : new Endpoint();
 
         $endpoint->setName($requestBody['name']);
@@ -242,5 +261,15 @@ class Streams extends Controller
         }
 
         return new JsonResponse();
+    }
+
+    /**
+     * @param null|string $string
+     * @return false|int
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    private function isValidString(?string $string)
+    {
+        return preg_match('/^[a-z|A-Z|a-z|A-Z|0-9|.|\-|_|]+$/', $string);
     }
 }

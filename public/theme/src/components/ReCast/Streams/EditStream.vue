@@ -83,7 +83,20 @@
             save: function () {
                 this.axios.post('/streams/update', this.stream).then(() => {
                     this.$router.push('/ucp/streams/');
-                })
+                }).catch(error => {
+                    const notification = {
+                        template: `<span>${error.response.data.message}</span>`
+                    };
+
+                    this.$notify(
+                        {
+                            component: notification,
+                            icon: 'fa fa-exclamation-triangle',
+                            horizontalAlign: 'right',
+                            verticalAlign: 'top',
+                            type: 'danger'
+                        });
+                });
             },
             deleteEndpoint: function (endpoint) {
                 this.endpoints.splice(this.endpoints.indexOf(endpoint), 1);
