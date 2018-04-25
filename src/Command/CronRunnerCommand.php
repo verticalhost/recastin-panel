@@ -66,6 +66,4 @@ class CronRunnerCommand extends Command
             $this->connection->executeQuery('TRUNCATE queue');
         }
     }
-
-
 }
