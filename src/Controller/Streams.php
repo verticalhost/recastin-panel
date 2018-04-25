@@ -73,7 +73,7 @@ class Streams extends Controller
 
         $host = parse_url($this->container->getParameter('appHost'), PHP_URL_HOST);
         $data = $stream->jsonSerialize();
-        $data['streamUrl'] = sprintf('rtmp://%s/%s', $host, $stream->getUser()->getUsername() . '_' . $stream->getId());
+        $data['streamUrl'] = sprintf('rtmp://%s/%s', $host, $stream->getUser()->getUsername() . '_' . $stream->getName());
 
         return new JsonResponse($data);
     }

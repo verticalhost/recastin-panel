@@ -95,7 +95,7 @@ rtmp {
                     $configPush[] = "\t\t\tpush " . $this->buildUrl($endpoint) . ';';
                 }
 
-                $applicationName = sprintf('%s_%s', $stream->getUser()->getUsername(), $stream->getId());
+                $applicationName = sprintf('%s/%s', $stream->getUser()->getUsername(), $stream->getName());
                 $vhost .= sprintf(self::VHOST, $applicationName, implode("\n", $configPush));
             }
         }
