@@ -23,8 +23,7 @@ const router = new VueRouter({
 });
 
 Vue.router = router;
-
-axios.defaults.baseURL = `http://streamer.miku/api`;
+axios.defaults.baseURL = typeof appUrl === 'undefined' ? `http://streamer.miku/api` : appUrl;
 
 Vue.use(VueAxios, axios);
 Vue.use(VueNotify);

@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class Index extends Controller
 {
     /**
-     * @Route(path="/")
+     * @Route(path="/", name="index")
      * @author Soner Sayakci <shyim@posteo.de>
      */
     public function index()
