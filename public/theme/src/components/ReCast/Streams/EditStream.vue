@@ -7,12 +7,14 @@
                     <h4 v-if="$route.params.id != 'add'">Edit "{{ stream.name }}"</h4>
 
                     <card>
-                        <fg-input label="Name" v-model="stream.name"></fg-input>
-                        <div class="form-group">
-                            <p-checkbox v-model="stream.active">Active</p-checkbox>
-                        </div>
+                        <form @submit="save">
+                            <fg-input label="Name" v-model="stream.name"></fg-input>
+                            <div class="form-group">
+                                <p-checkbox v-model="stream.active">Active</p-checkbox>
+                            </div>
 
-                        <button class="btn btn-primary" v-on:click="save">Save</button>
+                            <button class="btn btn-primary">Save</button>
+                        </form>
                     </card>
 
                     <div v-if="this.$route.params.id !== 'add'">
@@ -39,8 +41,8 @@
                                     <td>{{ endpoint.server }}</td>
                                     <td>
                                         <a :href="'#/ucp/streams/' + $route.params.id + '/endpoints/' + endpoint.id" class="btn btn-secondary">Edit</a>
-                                        <a v-on:click="toggleEndpoint(endpoint)" class="btn btn-info">{{ endpoint.active ? 'Disable' : 'Enable' }}</a>
-                                        <a v-on:click="deleteEndpoint(endpoint)" class="btn btn-danger">Delete</a>
+                                        <a @click="toggleEndpoint(endpoint)" class="btn btn-info">{{ endpoint.active ? 'Disable' : 'Enable' }}</a>
+                                        <a @click="deleteEndpoint(endpoint)" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -81,7 +83,8 @@
             }
         },
         methods: {
-            save: function () {
+            save: function (e) {
+                e.preventDefault();
                 this.axios.post('/streams/update', this.stream).then(() => {
                     this.$router.push('/ucp/streams/');
                 }).catch(error => {

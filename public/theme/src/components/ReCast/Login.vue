@@ -6,22 +6,25 @@
 
             <div class="alert alert-danger" v-if="authFailed">Bad credentials</div>
 
-            <fg-input type="text"
-                      label="Username"
-                      placeholder="Username"
-                      v-model="login._username">
-            </fg-input>
 
-            <div class="form-group">
-                <label class="control-label">Password</label>
-                <input type="password" class="form-control" placeholder="Password" v-model="login._password">
-            </div>
+            <form @submit="onLogin">
+                <fg-input type="text"
+                          label="Username"
+                          placeholder="Username"
+                          v-model="login._username">
+                </fg-input>
 
-            <div class="form-group">
-                <p-checkbox v-model="rememberMe">Remember Me</p-checkbox>
-            </div>
+                <div class="form-group">
+                    <label class="control-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Password" v-model="login._password">
+                </div>
 
-            <button class="btn btn-primary" v-on:click="onLogin">Login</button>
+                <div class="form-group">
+                    <p-checkbox v-model="rememberMe">Remember Me</p-checkbox>
+                </div>
+
+                <button class="btn btn-primary">Login</button>
+            </form>
         </div>
     </div>
 </template>
@@ -45,7 +48,8 @@
             }
         },
         methods: {
-            onLogin: function () {
+            onLogin: function (e) {
+                e.preventDefault();
                 let bodyFormData = new FormData();
                 bodyFormData.set('_username', this.login._username);
                 bodyFormData.set('_password', this.login._password);

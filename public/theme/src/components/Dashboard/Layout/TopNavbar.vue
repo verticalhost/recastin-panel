@@ -19,7 +19,7 @@
                         <a href="#/ucp/settings" class="nav-link">
                             Account Settings
                         </a>
-                        <a href="#" v-on:click="logout" class="nav-link">
+                        <a href="#" @click="logout" class="nav-link">
                             Log out
                         </a>
                     </li>

@@ -25,8 +25,8 @@
                                     <td>
                                         <a :href="'#/ucp/streams/' + stream.id + '/setup'" class="btn btn-info">Setup</a>
                                         <a :href="'#/ucp/streams/' + stream.id + '/'" class="btn btn-secondary">Edit</a>
-                                        <a v-on:click="regenerateKey(stream)" class="btn btn-danger">Regenerate Stream Key</a>
-                                        <a v-on:click="deleteStream(stream)" class="btn btn-danger">Delete</a>
+                                        <a @click="regenerateKey(stream)" class="btn btn-danger">Regenerate Stream Key</a>
+                                        <a @click="deleteStream(stream)" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -38,7 +38,6 @@
     </div>
 </template>
 <script>
-
     export default {
         data() {
             return {
@@ -75,10 +74,6 @@
             }
         },
     }
-
 </script>
 <style>
-    .text-right {
-        text-align: right;
-    }
 </style>

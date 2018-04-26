@@ -7,35 +7,37 @@
                     <h4 v-if="$route.params.id != 'add'">Edit "{{ endpoint.name }}"</h4>
 
                     <card>
-                        <fg-input label="Name" v-model="endpoint.name"></fg-input>
+                        <form @submit="save">
+                            <fg-input label="Name" v-model="endpoint.name"></fg-input>
 
-                        <div class="form-group">
-                            <p-checkbox v-model="endpoint.active">Active</p-checkbox>
-                        </div>
+                            <div class="form-group">
+                                <p-checkbox v-model="endpoint.active">Active</p-checkbox>
+                            </div>
 
-                        <div class="form-group">
-                            <label class="control-label">
-                                Type
-                            </label>
-                            <select class="form-control" v-model="endpoint.type">
-                                <option v-for="name in serviceNames" :value="name">{{name}}</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Type
+                                </label>
+                                <select class="form-control" v-model="endpoint.type">
+                                    <option v-for="name in serviceNames" :value="name">{{name}}</option>
+                                </select>
+                            </div>
 
-                        <div class="form-group" v-if="serverData.length">
-                            <label class="control-label">
-                                Server
-                            </label>
-                            <select class="form-control" v-model="endpoint.server">
-                                <option v-for="server in serverData" :value="server.value">{{server.name}}</option>
-                            </select>
-                        </div>
+                            <div class="form-group" v-if="serverData.length">
+                                <label class="control-label">
+                                    Server
+                                </label>
+                                <select class="form-control" v-model="endpoint.server">
+                                    <option v-for="server in serverData" :value="server.value">{{server.name}}</option>
+                                </select>
+                            </div>
 
-                        <fg-input label="Server" v-model="endpoint.server" v-if="!serverData.length"></fg-input>
+                            <fg-input label="Server" v-model="endpoint.server" v-if="!serverData.length"></fg-input>
 
-                        <fg-input label="Stream-Key" v-model="endpoint.streamKey"></fg-input>
+                            <fg-input label="Stream-Key" v-model="endpoint.streamKey"></fg-input>
 
-                        <button class="btn btn-primary" v-on:click="save">Save</button>
+                            <button class="btn btn-primary">Save</button>
+                        </form>
                     </card>
                 </div>
             </div>
@@ -77,7 +79,8 @@
             }
         },
         methods: {
-            save: function () {
+            save: function (e) {
+                e.preventDefault();
                 this.axios.post('/streams/' + this.$route.params.streamId + '/endpoints/update', this.endpoint).then(() => {
                     this.$router.push('/ucp/streams/' + this.$route.params.streamId + '/');
                 }).catch(error => {
