@@ -10,7 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -53,7 +52,17 @@ class CreateUserCommand extends Command implements ContainerAwareInterface
         $io = new SymfonyStyle($input, $output);
 
         $username = $io->ask('What should be the username?');
-        $email = $io->ask('What should be the email?');
+
+        do {
+            $email = $io->ask('What should be the email?');
+            $valid = (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
+
+            if (!$valid) {
+                $io->error('Invalid email address');
+            }
+
+        } while(!$valid);
+
         $password = $io->askHidden('What should be the password?');
 
         $user = new User();

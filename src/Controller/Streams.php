@@ -297,6 +297,6 @@ class Streams extends Controller
      */
     private function isValidString(?string $string)
     {
-        return preg_match('/^[a-z|A-Z|a-z|A-Z|0-9|.|\-|_|]+$/', $string);
+        return preg_match('/^[a-z|A-Z|a-z|A-Z|0-9|.|\-|_|\{|\}|\:|\/]+$/', $string);
     }
 }
