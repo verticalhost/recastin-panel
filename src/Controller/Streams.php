@@ -242,6 +242,33 @@ class Streams extends Controller
     }
 
     /**
+     * @Route(path="/toggleEndpoint")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    public function toggleEndpoint(Request $request) : JsonResponse
+    {
+        $id = $request->request->get('id');
+        $endpoint = $this->endpointRepository->find($id);
+
+        if ($endpoint === null || $endpoint->getStream()->getUserId() !== $this->getUser()->getId()) {
+            return new JsonResponse([]);
+        }
+
+        $endpoint->setActive(!$endpoint->isActive());
+
+        $manager = $this->get('doctrine.orm.entity_manager');
+
+        $manager->persist($endpoint);
+        $manager->flush();
+
+        return new JsonResponse($endpoint);
+    }
+
+    /**
      * @Route(path="/deleteEndpoint")
      * @author Soner Sayakci <shyim@posteo.de>
      * @param Request $request

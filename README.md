@@ -20,10 +20,12 @@ ReCast is a multi platform streaming tool written in PHP and uses nginx RTMP. Yo
 
 ## Screenshots
 
-![Dashboard](https://i.imgur.com/CJFRqFM.png)
+![Dashboard](https://i.imgur.com/6gcqWTh.png)
 
-![List Streams](https://i.imgur.com/xRi6eQT.png)
+![List Streams](https://i.imgur.com/E5FVy9K.png)
 
-![Add Endpoint](https://i.imgur.com/OvLihhw.png)
+![Edit Stream](https://i.imgur.com/PHYjnQn.png)
 
-![Setup](https://i.imgur.com/gPDnIfr.png)
+![Add Endpoint](https://i.imgur.com/bYteEQR.png)
+
+![Setup](https://i.imgur.com/ZfP7Tpv.png)

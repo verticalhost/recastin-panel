@@ -39,6 +39,7 @@
                                     <td>{{ endpoint.server }}</td>
                                     <td>
                                         <a :href="'#/ucp/streams/' + $route.params.id + '/endpoints/' + endpoint.id" class="btn btn-secondary">Edit</a>
+                                        <a v-on:click="toggleEndpoint(endpoint)" class="btn btn-info">{{ endpoint.active ? 'Disable' : 'Enable' }}</a>
                                         <a v-on:click="deleteEndpoint(endpoint)" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
@@ -101,6 +102,13 @@
             deleteEndpoint: function (endpoint) {
                 this.endpoints.splice(this.endpoints.indexOf(endpoint), 1);
                 this.axios.post('/streams/deleteEndpoint', {id: endpoint.id});
+            },
+            toggleEndpoint: function (endpoint) {
+                this.axios.post('/streams/toggleEndpoint', {id: endpoint.id}).then(response => {
+                    this.axios.get('/streams/' + this.$route.params.id + '/endpoints/').then(response => {
+                        this.endpoints = response.data;
+                    });
+                });
             }
         }
     }
