@@ -21,7 +21,7 @@ ReCast is a multi platform streaming tool written in PHP and uses nginx RTMP. Yo
 | APP_ENV               | Which environment it runs                                         | prod                                             |
 | DATABASE_URL          | Database credentials as URL                                       | DATABASE_URL=mysql://USER:PASS@HOST:3306/DB_NAME |
 | NGINX_CONFIG_DIR      | Folder where nginx.conf is located                                | /opt/nginx-rtmp/conf/                            |
-| APP_HOST              | URL which is used in nginx rtmp conf, This address should be http | https://try.recast.in                            |
+| APP_HOST              | URL which is used in nginx rtmp conf, This address should be http | http://try.recast.in                            |
 | NGINX_RESTART_COMMAND | Reload command for nginx rtmp                                     | systemctl reload nginx-rtmp                      |
 
 **Docker Setup will be following**
