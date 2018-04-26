@@ -7,12 +7,12 @@ ReCast is a multi platform streaming tool written in PHP and uses nginx RTMP. Yo
 ## Installation
 
 * You have to install a nginx server [Tutorial](https://github.com/recastin/panel/wiki/Install-Nginx-RTMP)
-* Checkout this project, copy .env.dist to .env and adjust the settings
+* Checkout this project
 * Run ```composer install --no-dev -o```
-* Generate JWT Keys, follow [Documentation](https://github.com/lexik/LexikJWTAuthenticationBundle/blob/HEAD/Resources/doc/index.md#installation)
-* Create the database ```php bin/console doctrine:migrations:migrate```
-* Create a new crontab entry which runs every minute ```php bin/console recast:cron```
+* Run ``php bin/console recast:setup``
+* Create the tables ```php bin/console doctrine:migrations:migrate```
 * Create a new user with ```php bin/console recast:create:user```
+* Create a new crontab entry which runs every minute ```php bin/console recast:cron```
 * Environment variable ``APP_HOST`` should point to a http server, nginx rtmp does not support https.
 
 ### Environment variable overview
