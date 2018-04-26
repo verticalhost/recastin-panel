@@ -14,6 +14,8 @@ import EditStream from 'src/components/ReCast/Streams/EditStream.vue'
 import SetupStream from 'src/components/ReCast/Streams/SetupStream.vue'
 import EditEndpoint from 'src/components/ReCast/Endpoints/EditEndpoint.vue'
 
+import AccountSettings from 'src/components/ReCast/AccountSettings.vue'
+
 const routes = [
     {
         path: '/',
@@ -34,6 +36,11 @@ const routes = [
                 path: 'overview',
                 name: 'Overview',
                 component: Overview,
+                meta: {auth: true},
+            },
+            {
+                path: 'settings',
+                component: AccountSettings,
                 meta: {auth: true},
             },
             {

@@ -16,6 +16,9 @@
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a href="#/ucp/settings" class="nav-link">
+                            Account Settings
+                        </a>
                         <a href="#" v-on:click="logout" class="nav-link">
                             Log out
                         </a>

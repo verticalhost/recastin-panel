@@ -54,4 +54,10 @@
   .form-check {
     padding: 0;
   }
+  .form-check .form-check-label {
+    padding-left: 25px;
+  }
+  .form-check .form-check-sign::before, .form-check .form-check-sign::after {
+    margin-top: -17px;
+  }
 </style>
