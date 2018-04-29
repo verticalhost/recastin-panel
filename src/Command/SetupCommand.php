@@ -85,6 +85,7 @@ class SetupCommand extends Command
         file_put_contents($envs['JWT_PUBLIC_KEY_PATH'], $pubKey);
 
         $io->success('JWT Tokens generated');
+        $io->warning('Please clear cache using command cache:clear');
     }
 
     /**

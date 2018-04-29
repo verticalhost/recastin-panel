@@ -16,14 +16,18 @@ ReCast is a multi platform streaming tool written in PHP and uses nginx RTMP. Yo
 * Environment variable ``APP_HOST`` should point to a http server, nginx rtmp does not support https.
 
 ### Environment variable overview
-| Name                  | Description                                                       | Example                                          |
-|-----------------------|-------------------------------------------------------------------|--------------------------------------------------|
-| APP_HOST              | URL which is used in nginx rtmp conf, This address must be http   | http://try.recast.in                             |
-| APP_ENV               | Which environment it runs                                         | prod                                             |
-| DATABASE_URL          | Database credentials as URL                                       | DATABASE_URL=mysql://USER:PASS@HOST:3306/DB_NAME |
-| NGINX_CONFIG_DIR      | Folder where nginx.conf is located                                | /opt/nginx-rtmp/conf/                            |
-| NGINX_RELOAD_COMMAND | Reload command for nginx rtmp                                     | systemctl reload nginx-rtmp                      |
+| Name                      | Description                                                       | Example                                          |
+|---------------------------|-------------------------------------------------------------------|--------------------------------------------------|
+| APP_HOST                  | URL which is used in nginx rtmp conf, This address must be http   | http://try.recast.in                             |
+| APP_ENV                   | Which environment it runs                                         | prod                                             |
 | APP_REGISTRATION_ENABLED  | Toggles registration form                                         | true                                             |
+| DATABASE_URL              | Database credentials as URL                                       | DATABASE_URL=mysql://USER:PASS@HOST:3306/DB_NAME |
+| NGINX_CONFIG_DIR          | Folder where nginx.conf is located                                | /opt/nginx-rtmp/conf/                            |
+| NGINX_RELOAD_COMMAND      | Reload command for nginx rtmp                                     | systemctl reload nginx-rtmp                      |
+
+## Free hosted version
+
+We have also on https://app.recast.in a free to use ReCast setup.
 
 **Docker Setup will be following**
 
