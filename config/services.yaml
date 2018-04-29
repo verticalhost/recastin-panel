@@ -3,8 +3,9 @@
 parameters:
     locale: 'en'
     appHost: '%env(APP_HOST)%'
-    nginxFolder: '%env(NGINX_CONFIG_DIR)%'
-    nginxRestartCommand: '%env(NGINX_RESTART_COMMAND)%'
+    nginxConfigFolder: '%env(NGINX_CONFIG_DIR)%'
+    nginxReloadCommand: '%env(NGINX_RELOAD_COMMAND)%'
+    registrationEnabled: '%env(APP_REGISTRATION_ENABLED)%'
 
 services:
     # default configuration for services in *this* file
@@ -39,7 +40,7 @@ services:
         class: App\Component\NginxConfigGenerator
         autowire: true
         bind:
-            $nginxFolder: '%nginxFolder%'
+            $nginxFolder: '%nginxConfigFolder%'
             $appHost: '%appHost%'
 
     # add more service definitions when explicit configuration is needed

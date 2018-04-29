@@ -48,22 +48,24 @@ class SetupCommand extends Command
         $appHost = $io->ask('Please specify a http url where recast will be available', 'http://app.recast.in');
         $nginxFolder = $io->ask('Please specify the nginx folder where nginx rtmp is installed', '/opt/nginx-rtmp/conf/');
         $nginxReloadCommand = $io->ask('Please specify the command that should be executed to reload nginx rtmp', 'systemctl reload nginx-rtmp');
+        $registerEnabled = $io->ask('Should the registration enabled? (true / false)', 'true');
 
         if (parse_url($appHost, PHP_URL_SCHEME) !== 'http') {
             throw new \RuntimeException('URL must be http due nginx-rtmp limitations');
         }
 
         $envs = [];
+        $envs['APP_HOST'] = $appHost;
         $envs['APP_ENV'] = 'prod';
         $envs['APP_SECRET'] = $this->generateRandomString();
+        $envs['REGISTRATION_ENABLED'] = $registerEnabled;
         $envs['MAILER_URL'] = 'null://localhost';
         $envs['JWT_PRIVATE_KEY_PATH'] = 'config/jwt/private.pem';
         $envs['JWT_PUBLIC_KEY_PATH'] = 'config/jwt/public.pem';
         $envs['JWT_PASSPHRASE'] = 'a758fddfbc878122f8b37259b8ea14c3';
         $envs['DATABASE_URL'] = sprintf('mysql://%s:%s@%s:%s/%s', $user, $password, $host, $hostPort, $dbName);
         $envs['NGINX_CONFIG_DIR'] = $nginxFolder;
-        $envs['APP_HOST'] = $appHost;
-        $envs['NGINX_RESTART_COMMAND'] = $nginxReloadCommand;
+        $envs['NGINX_RELOAD_COMMAND'] = $nginxReloadCommand;
 
         $stringEnv = [];
         foreach ($envs as $env => $value) {

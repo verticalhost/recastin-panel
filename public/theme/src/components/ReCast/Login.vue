@@ -1,11 +1,10 @@
 <template>
     <div class="loginWrapper">
         <div class="sidebarBanner"></div>
-        <div class="loginForm">
+        <div class="loginForm" v-if="!showRegistration">
             <h4>Login</h4>
 
             <div class="alert alert-danger" v-if="authFailed">Bad credentials</div>
-
 
             <form @submit="onLogin">
                 <fg-input type="text"
@@ -24,6 +23,48 @@
                 </div>
 
                 <button class="btn btn-primary">Login</button>
+
+                <div v-if="settings.registrationEnabled">
+                    <hr>
+                    <div class="text-center">
+                        <a @click="toggleRegistration" href="#">Create a new Account</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="loginForm" v-if="showRegistration">
+            <h4>Registration</h4>
+
+            <form @submit="onRegister">
+                <fg-input type="text"
+                          label="Username"
+                          placeholder="Username"
+                          pattern=".{3,}"
+                          v-model="register.username">
+                </fg-input>
+
+                <div class="form-group">
+                    <label class="control-label">Password</label>
+                    <input type="password" class="form-control" pattern=".{6,}" placeholder="Password" v-model="register.password">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Password Confirmation</label>
+                    <input type="password" class="form-control" pattern=".{6,}" placeholder="Password Confirmation" v-model="register.passwordConfirm">
+                </div>
+
+                <fg-input type="email"
+                          label="Email"
+                          placeholder="Email"
+                          v-model="register.email">
+                </fg-input>
+
+                <button class="btn btn-primary">Register</button>
+                <hr>
+                <div class="text-center">
+                    <a @click="toggleRegistration" href="#">I have already a account</a>
+                </div>
             </form>
         </div>
     </div>
@@ -33,6 +74,11 @@
     import Card from 'src/components/UIComponents/Cards/Card.vue'
 
     export default {
+        mounted() {
+            this.axios.get('/settings').then(response => {
+                this.settings = response.data;
+            })
+        },
         components: {
             Card,
             PCheckbox
@@ -43,8 +89,18 @@
                     _username: '',
                     _password: '',
                 },
+                register: {
+                    username: '',
+                    password: '',
+                    passwordConfirm: '',
+                    email: ''
+                },
                 rememberMe: false,
-                authFailed: false
+                authFailed: false,
+                settings: {
+                    registrationEnabled: false
+                },
+                showRegistration: false
             }
         },
         methods: {
@@ -64,6 +120,25 @@
                         };
 
                         this.$notify(
+                            {
+                                component: notification,
+                                icon: 'fa fa-exclamation-triangle',
+                                horizontalAlign: 'right',
+                                verticalAlign: 'top',
+                                type: 'danger'
+                            });
+                    }
+                })
+            },
+            onRegister: function(e) {
+                e.preventDefault();
+
+                if (this.register.password !== this.register.passwordConfirm) {
+                    const notification = {
+                        template: `<span>Passwords are not equal</span>`
+                    };
+
+                    this.$notify(
                         {
                             component: notification,
                             icon: 'fa fa-exclamation-triangle',
@@ -71,8 +146,39 @@
                             verticalAlign: 'top',
                             type: 'danger'
                         });
-                    }
-                })
+                } else {
+                    this.axios.post('/register', this.register).then(response => {
+                        const notification = {
+                            template: `<span>Registration was successfully. You can login now</span>`
+                        };
+
+                        this.$notify(
+                            {
+                                component: notification,
+                                icon: 'fa fa-exclamation-triangle',
+                                horizontalAlign: 'right',
+                                verticalAlign: 'top',
+                                type: 'success'
+                            });
+                        this.toggleRegistration();
+                    }).catch(error => {
+                        const notification = {
+                            template: `<span>${error.response.data.message}</span>`
+                        };
+
+                        this.$notify(
+                            {
+                                component: notification,
+                                icon: 'fa fa-exclamation-triangle',
+                                horizontalAlign: 'right',
+                                verticalAlign: 'top',
+                                type: 'danger'
+                            });
+                    })
+                }
+            },
+            toggleRegistration: function () {
+                this.showRegistration = !this.showRegistration;
             }
         }
     }

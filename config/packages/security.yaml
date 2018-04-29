@@ -3,6 +3,10 @@ security:
         user_db:
              entity: { class: App\Entity\User, property: username }
     firewalls:
+        settings:
+            pattern: ^/api/(settings|register)
+            security: false
+
         login:
             pattern:  ^/api/auth/login
             stateless: true

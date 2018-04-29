@@ -63,7 +63,7 @@ class CronRunnerCommand extends Command implements ContainerAwareInterface
     {
         if ($this->connection->fetchColumn('SELECT 1 FROM queue')) {
             $this->configGenerator->generate();
-            system($this->container->getParameter('nginxRestartCommand'));
+            system($this->container->getParameter('nginxReloadCommand'));
 
             $io = new SymfonyStyle($input, $output);
             $io->success('Configs generated, rtmp has been reloaded');
