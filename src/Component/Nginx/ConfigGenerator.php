@@ -1,16 +1,17 @@
 <?php
 
 
-namespace App\Component;
+namespace App\Component\Nginx;
 
+use App\Component\ServiceManager;
 use App\Entity\Endpoint;
 use App\Repository\StreamsRepository;
 
 /**
- * Class NginxConfigGenerator
+ * Class ConfigGenerator
  * @author Soner Sayakci <shyim@posteo.de>
  */
-class NginxConfigGenerator
+class ConfigGenerator
 {
     private const VHOST = "\t\tapplication %s {
 \t\t\tlive on;
@@ -31,6 +32,15 @@ rtmp {
 %s
 \t}
 }
+
+http {
+\tserver {
+\t\tlisten 127.0.0.1:26765;
+\t\tlocation /stat {
+\t\t\trtmp_stat all;
+\t\t}
+\t}
+}
 ";
 
     /**
@@ -45,7 +55,7 @@ rtmp {
     /**
      * @var string
      */
-    private $nginxFolder;
+    private $nginxConfigFolder;
 
     /**
      * @var string
@@ -53,18 +63,18 @@ rtmp {
     private $appHost;
 
     /**
-     * NginxConfigGenerator constructor.
+     * ConfigGenerator constructor.
      * @param StreamsRepository $repository
      * @param ServiceManager $manager
-     * @param string $nginxFolder
+     * @param string $nginxConfigFolder
      * @param string $appHost
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function __construct(StreamsRepository $repository, ServiceManager $manager, string $nginxFolder, string $appHost)
+    public function __construct(StreamsRepository $repository, ServiceManager $manager, string $nginxConfigFolder, string $appHost)
     {
         $this->repository = $repository;
         $this->manager = $manager;
-        $this->nginxFolder = $nginxFolder;
+        $this->nginxConfigFolder = $nginxConfigFolder;
         $this->appHost = $appHost;
     }
 
@@ -74,9 +84,9 @@ rtmp {
      */
     public function generate(): void
     {
-        if (!file_exists($this->nginxFolder)) {
-            if (!mkdir($this->nginxFolder, 7777, true) && !is_dir($this->nginxFolder)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $this->nginxFolder));
+        if (!file_exists($this->nginxConfigFolder)) {
+            if (!mkdir($this->nginxConfigFolder, 7777, true) && !is_dir($this->nginxConfigFolder)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $this->nginxConfigFolder));
             }
         }
 
@@ -100,7 +110,7 @@ rtmp {
             }
         }
 
-        file_put_contents($this->nginxFolder . '/nginx.conf', sprintf(self::NGINX_CONF, $vhost));
+        file_put_contents($this->nginxConfigFolder . '/nginx.conf', sprintf(self::NGINX_CONF, $vhost));
     }
 
     /**

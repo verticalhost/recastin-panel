@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Component\Nginx\Stats;
 use App\Component\ServiceManager;
 use App\Entity\Endpoint;
 use App\Entity\User;
@@ -48,7 +49,7 @@ class Streams extends Controller
      * @Route(path="/list")
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function streams() : Response
+    public function streams(): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -62,7 +63,7 @@ class Streams extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function one(Request $request) : Response
+    public function one(Request $request): Response
     {
         $stream = $this->repository->find($request->query->get('id'));
 
@@ -85,7 +86,7 @@ class Streams extends Controller
      * @throws \Doctrine\ORM\OptimisticLockException
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function update(Request $request) : Response
+    public function update(Request $request): Response
     {
         $requestBody = $request->request->all();
 
@@ -105,7 +106,7 @@ class Streams extends Controller
 
         $manager = $this->get('doctrine.orm.entity_manager');
 
-        try  {
+        try {
             $manager->persist($stream);
             $manager->flush();
         } catch (UniqueConstraintViolationException $e) {
@@ -124,7 +125,7 @@ class Streams extends Controller
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function regenerate(Request $request) : Response
+    public function regenerate(Request $request): Response
     {
         $manager = $this->get('doctrine.orm.entity_manager');
         $streams = $manager->find(\App\Entity\Streams::class, $request->request->get('id'));
@@ -147,7 +148,7 @@ class Streams extends Controller
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function delete(Request $request) : Response
+    public function delete(Request $request): Response
     {
         $manager = $this->get('doctrine.orm.entity_manager');
         $streams = $manager->find(\App\Entity\Streams::class, $request->request->get('id'));
@@ -172,6 +173,24 @@ class Streams extends Controller
     }
 
     /**
+     * @Route(path="/{id}/stats")
+     * @param int $id
+     * @param Stats $nginxStats
+     * @return JsonResponse
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    public function stats(Stats $nginxStats, int $id): JsonResponse
+    {
+        $stream = $this->repository->find($id);
+
+        if ($stream === null || $stream->getUserId() !== $this->getUser()->getId()) {
+            return new JsonResponse([]);
+        }
+
+        return new JsonResponse($nginxStats->getStatsForStream($stream));
+    }
+
+    /**
      * @Route(path="/{id}/endpoints/")
      * @author Soner Sayakci <shyim@posteo.de>
      * @param int $id
@@ -188,7 +207,7 @@ class Streams extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function endpoint(int $id)
+    public function endpoint(int $id): JsonResponse
     {
         return new JsonResponse($this->endpointRepository->find($id));
     }
@@ -249,7 +268,7 @@ class Streams extends Controller
      * @throws \Doctrine\ORM\OptimisticLockException
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function toggleEndpoint(Request $request) : JsonResponse
+    public function toggleEndpoint(Request $request): JsonResponse
     {
         $id = $request->request->get('id');
         $endpoint = $this->endpointRepository->find($id);
@@ -277,7 +296,7 @@ class Streams extends Controller
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function deleteEndpoint(Request $request) : Response
+    public function deleteEndpoint(Request $request): Response
     {
         $manager = $this->get('doctrine.orm.entity_manager');
         $endpoint = $manager->find(Endpoint::class, $request->request->get('id'));

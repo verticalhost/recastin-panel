@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Component\NginxConfigGenerator;
+use App\Component\Nginx\ConfigGenerator;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,8 +23,9 @@ class CronRunnerCommand extends Command implements ContainerAwareInterface
      * @var Connection
      */
     private $connection;
+
     /**
-     * @var NginxConfigGenerator
+     * @var ConfigGenerator
      */
     private $configGenerator;
 
@@ -32,10 +33,10 @@ class CronRunnerCommand extends Command implements ContainerAwareInterface
      * CronRunnerCommand constructor.
      * @param null|string $name
      * @param Connection $connection
-     * @param NginxConfigGenerator $configGenerator
+     * @param ConfigGenerator $configGenerator
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function __construct(?string $name = null, Connection $connection, NginxConfigGenerator $configGenerator)
+    public function __construct(?string $name = null, Connection $connection, ConfigGenerator $configGenerator)
     {
         parent::__construct($name);
         $this->connection = $connection;

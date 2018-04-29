@@ -4,7 +4,7 @@
 namespace App\Command;
 
 
-use App\Component\NginxConfigGenerator;
+use App\Component\Nginx\ConfigGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,17 +17,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class GenerateConfigCommand extends Command
 {
     /**
-     * @var NginxConfigGenerator
+     * @var ConfigGenerator
      */
     private $configGenerator;
 
     /**
      * GenerateConfigCommand constructor.
      * @param null|string $name
-     * @param NginxConfigGenerator $configGenerator
+     * @param ConfigGenerator $configGenerator
      * @author Soner Sayakci <shyim@posteo.de>
      */
-    public function __construct(?string $name = null, NginxConfigGenerator $configGenerator)
+    public function __construct(?string $name = null, ConfigGenerator $configGenerator)
     {
         parent::__construct($name);
         $this->configGenerator = $configGenerator;

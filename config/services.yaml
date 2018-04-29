@@ -36,11 +36,11 @@ services:
         class: App\Component\ServiceManager
         arguments: [!tagged recast.service]
 
-    App\Component\NginxConfigGenerator:
-        class: App\Component\NginxConfigGenerator
+    App\Component\Nginx\ConfigGenerator:
+        class: App\Component\Nginx\ConfigGenerator
         autowire: true
         bind:
-            $nginxFolder: '%nginxConfigFolder%'
+            $nginxConfigFolder: '%nginxConfigFolder%'
             $appHost: '%appHost%'
 
     # add more service definitions when explicit configuration is needed
