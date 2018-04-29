@@ -48,7 +48,7 @@ class SetupCommand extends Command
         $appHost = $io->ask('Please specify a http url where recast will be available', 'http://app.recast.in');
         $nginxFolder = $io->ask('Please specify the nginx folder where nginx rtmp is installed', '/opt/nginx-rtmp/conf/');
         $nginxReloadCommand = $io->ask('Please specify the command that should be executed to reload nginx rtmp', 'systemctl reload nginx-rtmp');
-        $registerEnabled = $io->ask('Should the registration enabled? (true / false)', 'true');
+        $registerEnabled = $io->ask('Should the registration enabled? (true / false)', 'false');
 
         if (parse_url($appHost, PHP_URL_SCHEME) !== 'http') {
             throw new \RuntimeException('URL must be http due nginx-rtmp limitations');
@@ -58,7 +58,7 @@ class SetupCommand extends Command
         $envs['APP_HOST'] = $appHost;
         $envs['APP_ENV'] = 'prod';
         $envs['APP_SECRET'] = $this->generateRandomString();
-        $envs['REGISTRATION_ENABLED'] = $registerEnabled;
+        $envs['APP_REGISTRATION_ENABLED'] = $registerEnabled;
         $envs['MAILER_URL'] = 'null://localhost';
         $envs['JWT_PRIVATE_KEY_PATH'] = 'config/jwt/private.pem';
         $envs['JWT_PUBLIC_KEY_PATH'] = 'config/jwt/public.pem';
