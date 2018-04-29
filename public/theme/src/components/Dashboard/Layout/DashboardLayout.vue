@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper">
         <side-bar>
-            <mobile-menu slot="content"></mobile-menu>
             <sidebar-link to="/ucp/overview">
                 <i class="fa fa-line-chart"></i>
                 <p>Dashboard</p>
@@ -29,14 +28,12 @@
     import TopNavbar from './TopNavbar.vue'
     import ContentFooter from './ContentFooter.vue'
     import DashboardContent from './Content.vue'
-    import MobileMenu from './MobileMenu.vue'
 
     export default {
         components: {
             TopNavbar,
             ContentFooter,
-            DashboardContent,
-            MobileMenu
+            DashboardContent
         },
         methods: {
             toggleSidebar() {
