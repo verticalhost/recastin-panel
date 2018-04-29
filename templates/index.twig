@@ -10,6 +10,19 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300" rel=stylesheet type=text/css>
     <link href="/static/css/nucleo-icons.css" rel=stylesheet>
     <link href="/static/css/app.css" rel=stylesheet>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ReCast - a multi platform restreaming tool">
+    <meta property="og:title" content="ReCast - a multi platform restreaming tool">
+    <meta property="og:description" content="Stream to multiple platforms simultaneously!" />
+    <meta property="og:url" content="{{ absolute_url(path('index')) }}">
+    <meta property="og:image" content="{{ absolute_url(path('index')) }}static/img/share.jpg">
+
+    <meta name="twitter:title" content="ReCast - a multi platform restreaming tool" />
+    <meta name="twitter:url" content="{{ absolute_url(path('index')) }}" />
+    <meta name="twitter:image" content="{{ absolute_url(path('index')) }}static/img/share.jpg" />
+    <meta name="twitter:card" content="" />
+
     <script>
         var appUrl = '{{ absolute_url(path('index')) }}api';
     </script>
