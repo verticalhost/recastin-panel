@@ -36,6 +36,8 @@
 
                             <fg-input label="Stream-Key" v-model="endpoint.streamKey"></fg-input>
 
+                            <fg-input label="Channel Name" v-model="endpoint.channelName"></fg-input>
+
                             <button class="btn btn-primary">Save</button>
                         </form>
                     </card>
@@ -61,6 +63,7 @@
                     type: 'Mixer',
                     server: '',
                     streamKey: '',
+                    channelName: '',
                 },
                 services: {},
                 serviceNames: []

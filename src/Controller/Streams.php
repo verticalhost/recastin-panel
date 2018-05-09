@@ -250,6 +250,7 @@ class Streams extends Controller
         $endpoint->setType($requestBody['type']);
         $endpoint->setServer($requestBody['server']);
         $endpoint->setStreamKey($requestBody['streamKey']);
+        $endpoint->setChannelName($requestBody['channelName']);
         $endpoint->setStream($stream);
 
         $manager = $this->get('doctrine.orm.entity_manager');

@@ -52,6 +52,12 @@ class Endpoint implements \JsonSerializable
     private $streamKey;
 
     /**
+     * @ORM\Column(name="channelName", type="string", length=255)
+     * @var string
+     */
+    private $channelName;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Streams", inversedBy="endpoints")
      * @ORM\JoinColumn(name="stream_id", referencedColumnName="id")
      */
@@ -183,6 +189,24 @@ class Endpoint implements \JsonSerializable
     public function setStream($stream): void
     {
         $this->stream = $stream;
+    }
+
+    /**
+     * @return string
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    public function getChannelName(): string
+    {
+        return $this->channelName;
+    }
+
+    /**
+     * @param string $channelName
+     * @author Soner Sayakci <shyim@posteo.de>
+     */
+    public function setChannelName(string $channelName): void
+    {
+        $this->channelName = $channelName;
     }
 
     /**
